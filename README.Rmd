@@ -53,15 +53,16 @@ data("graduates")
 graduates %>% 
   group_by(YEAR) %>% 
   summarize(total_grads = sum(GRADS),
-            UC_CSU = sum(UC_GRADS),
-            non_UC_CSU = total_grads - UC_CSU) %>%
+            Yes = sum(UC_GRADS),
+            No = total_grads - Yes) %>%
   select(-total_grads) %>% 
   gather(Eligibility, Graduates, -YEAR) %>% 
   ggplot(aes(YEAR, Graduates, fill = Eligibility)) +
   geom_bar(stat = "identity", color = "black") +
   labs(x = "Year",
        y = "Graduates",
-       title = "California High School Graduates, 1992-2016") +
+       title = "California High School Graduates, 1992-2016",
+       fill = "UC Eligible?") +
   scale_y_continuous(labels = scales::comma) +
   scale_fill_manual(values = c("yellow", "lightblue")) +
   theme_minimal() 
