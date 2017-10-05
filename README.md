@@ -65,3 +65,23 @@ graduates %>%
 ```
 
 ![](README-unnamed-chunk-3-1.png)
+
+``` r
+data("dropouts")
+dropouts %>% 
+  select(GENDER, matches("D[0-9]{1,2}")) %>% 
+  gather(GRADE, DROPOUTS, -GENDER) %>% 
+  mutate(GRADE = as.numeric(stringr::str_replace(GRADE, "D", ""))) %>% 
+  group_by(GENDER, GRADE) %>% 
+  summarize(DROPOUTS = sum(DROPOUTS)) %>% 
+  ggplot(aes(GRADE, DROPOUTS, fill = GENDER)) +
+  geom_bar(stat = "identity", position = "fill") +
+  scale_x_continuous(breaks = c(7:12)) +
+  labs(x = "Grade",
+       y = "",
+       title = "Proportion of Student Dropouts by Gender, Grades 7-12",
+       fill = "Gender") +
+  theme_minimal()
+```
+
+![](README-unnamed-chunk-4-1.png)
