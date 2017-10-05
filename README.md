@@ -2,6 +2,8 @@
 The California Department of Education in R
 ===========================================
 
+![](https://upload.wikimedia.org/wikipedia/commons/4/40/Seal_of_the_California_Department_of_Education.jpg)
+
 The California Department of Education provides ample data. Now, that data is available in R.
 
 Installation
