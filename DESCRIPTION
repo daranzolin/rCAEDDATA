@@ -1,9 +1,11 @@
 Package: rCAEDDATA
-Title: What the Package Does (one line, title case)
+Title: California Department of Education Datasets
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("David", "Ranzolin", email = "daranzolin@gmail.com", role = c("aut", "cre"))
+Description: Data from the California Department of Education, including enrollments, FRPM, 
+  dropouts, UC/CSU eligibility and more.
 Depends: R (>= 3.4.1)
-License: What license is it under?
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 6.0.1
