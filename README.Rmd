@@ -46,6 +46,8 @@ library(rCAEDDATA)
 
 ## Examples
 
+### Graduates
+
 ```{r, fig.width=12}
 library(rCAEDDATA)
 library(tidyverse)
@@ -68,6 +70,8 @@ graduates %>%
   theme_minimal() 
   
 ```
+
+### Dropouts
 
 ```{r}
 data("dropouts")

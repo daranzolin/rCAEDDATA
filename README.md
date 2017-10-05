@@ -34,6 +34,8 @@ Available Datasets
 Examples
 --------
 
+### Graduates
+
 ``` r
 library(rCAEDDATA)
 library(tidyverse)
@@ -66,6 +68,8 @@ graduates %>%
 ```
 
 ![](README-unnamed-chunk-3-1.png)
+
+### Dropouts
 
 ``` r
 data("dropouts")
