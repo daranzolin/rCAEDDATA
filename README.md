@@ -126,6 +126,7 @@ enrollments %>%
   labs(x = "Year",
        y = "",
        title = "Ethnic Diversity in Silicon Valley, 2007-2017",
+       subtitle = "Santa Clara Districts",
        fill = "Ethnicity") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
