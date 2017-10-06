@@ -90,3 +90,45 @@ dropouts %>%
 ```
 
 ![](README-unnamed-chunk-4-1.png)
+
+### Enrollments
+
+``` r
+enrollments %>% 
+  mutate(ETHNIC = case_when(
+    ETHNIC == 0 ~ "Not Reported",
+    ETHNIC == 1 ~ "American Indian",
+    ETHNIC == 2 ~ "Asian",
+    ETHNIC == 3 ~ "Pacific Islander",
+    ETHNIC == 4 ~ "Filipino",
+    ETHNIC == 5 ~ "Hispanic",
+    ETHNIC == 6 ~ "African American",
+    ETHNIC == 7 ~ "White",
+    ETHNIC == 9 | ETHNIC == 8 ~ "Two or More")
+    ) %>% 
+  filter(DISTRICT %in% c("Santa Clara Unified",
+                         "Milpitas Unified",
+                         "San Jose Unified",
+                         "Fremont Union High",
+                         "Mountain View-Los Altos Union High",
+                         "Cupertino Union",
+                         "Campbell Union", 
+                         "Cambrian",
+                         "Palo Alto Unified")
+  ) %>% 
+  select(DISTRICT, YEAR, ETHNIC, starts_with("GR_")) %>% 
+  gather(GRADE, STUDENTS, -DISTRICT, -YEAR, -ETHNIC) %>% 
+  group_by(DISTRICT, YEAR, ETHNIC) %>% 
+  summarize(TOTAL_STUDENTS = sum(STUDENTS)) %>% 
+  ggplot(aes(YEAR, TOTAL_STUDENTS, fill = ETHNIC)) +
+  geom_bar(stat = "identity", position = "fill") +
+  facet_wrap(~DISTRICT, nrow = 3) +
+  labs(x = "Year",
+       y = "",
+       title = "Ethnic Diversity in Silicon Valley, 2007-2017",
+       fill = "Ethnicity") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+![](README-unnamed-chunk-5-1.png)
