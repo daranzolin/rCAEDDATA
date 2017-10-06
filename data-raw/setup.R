@@ -131,6 +131,39 @@ english_leaners <- dir() %>%
   map_df(read_and_mutate_with_year)
 saveRDS(english_leaners, "english_learners.rds")
 
+# Downloadable files containing aggregate truancy data. The file contains the
+# total number of truancies reported by each local educational agency,
+# including Census Day enrollment, cumulative enrollment, and rates.
+
+url <- "http://www.cde.ca.gov/ds/sd/sd/filestd.asp"
+links <- url %>%
+  read_html() %>%
+  html_nodes(".centeredText+ td a") %>%
+  html_attr("href")
+
+for (link in links) {
+  name <- stringr::str_replace(link, "http://dq.cde.ca.gov/Dataquest/suspexp/", "")
+  download.file(link, destfile = name)
+}
+
+truancy <- dir() %>%
+  keep(stringr::str_detect(., "truancy")) %>%
+  map_df(read_tsv) %>%
+  mutate(YEAR = factor(Year, levels = "1213", "1314", "1415"))
+names(truancy) <- stringr::str_to_upper(names(truancy))
+
+url <- "http://www.cde.ca.gov/ds/sd/sd/filesesd.asp"
+links <- url %>%
+  read_html() %>%
+  html_nodes("td:nth-child(2) a") %>%
+  html_attr("href")
+
+suspensions <- links %>%
+  map_df(read_tsv) %>%
+  mutate(Year = factor(Year, levels = c("2011-12", "2012-13", "2013-14", "2014-15")))
+names(suspensions) <- stringr::str_to_upper(names(suspensions))
+
+
 library(devtools)
 
 use_data(cohorts)
@@ -140,6 +173,8 @@ use_data(enrollments)
 use_data(frpm)
 use_data(graduates)
 use_data(primary_and_short_term)
+use_data(truancy)
+use_data(suspensions)
 
 
 

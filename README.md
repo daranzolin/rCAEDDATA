@@ -31,6 +31,10 @@ Available Datasets
 
 -   [Primary and Short-Term Enrollment ("primary\_and\_short\_term")](http://www.cde.ca.gov/ds/sd/sd/filesenrps.asp) -- Data for primary and short-term school-level enrollment by racial/ethnic designation, gender, and grade.
 
+-   [Expulsion and Suspension Data](http://www.cde.ca.gov/ds/sd/sd/filesesd.asp) -- Data containing student discipline data by ethnicity. Expulsion, in-school suspension, and out-of-school suspension data are provided.
+
+-   [Truancy](http://www.cde.ca.gov/ds/sd/sd/filestd.asp) -- Data containing aggregate truancy data at the state, county, district, and school levels, including Census Day enrollment, cumulative enrollment, and rates.
+
 Examples
 --------
 
@@ -133,3 +137,44 @@ enrollments %>%
 ```
 
 ![](README-unnamed-chunk-5-1.png)
+
+### Suspensions
+
+``` r
+library(maps)
+#> 
+#> Attaching package: 'maps'
+#> The following object is masked from 'package:purrr':
+#> 
+#>     map
+library(ggmap)
+library(mapdata)
+states <- map_data("state")
+ca_df <- subset(states, region == "california")
+counties <- map_data("county")
+ca_county <- subset(counties, region == "california")
+
+drug_data <- suspensions %>% 
+  filter(YEAR == "2014-15",
+         AGGEGATELEVEL == "O") %>% 
+  group_by(NAME) %>% 
+  summarize(TOTAL_DRUGS = sum(DRUGS, na.rm = TRUE),
+            TOTAL = sum(TOTAL, na.rm = TRUE),
+            DRUG_PROP = round(TOTAL_DRUGS/TOTAL, 2))
+
+map_data <- left_join(ca_county, drug_data %>% 
+                        mutate(subregion = stringr::str_to_lower(NAME)), 
+                      by = "subregion")
+
+ggplot(data = ca_df, mapping = aes(x = long, y = lat, group = group)) + 
+  coord_fixed(1.3) + 
+  geom_polygon(color = "black", fill = "gray") +
+  geom_polygon(data = map_data, aes(fill = DRUG_PROP), color = "white") +
+  geom_polygon(color = "black", fill = NA) +
+  labs(title = "Proportion of Drugs-Related Suspensions by County, 2014-2015",
+       fill = "Proportion") +
+  theme_void() +
+  viridis::scale_fill_viridis()
+```
+
+![](README-unnamed-chunk-6-1.png)

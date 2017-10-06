@@ -10,6 +10,8 @@
 \alias{frpm}
 \alias{graduates}
 \alias{primary_and_short_term}
+\alias{truancy}
+\alias{suspensions}
 \title{Datasets from the California Department of Education}
 \format{An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 512812 rows and 18 columns.}
 \source{
@@ -30,14 +32,18 @@ frpm
 graduates
 
 primary_and_short_term
+
+truancy
+
+suspensions
 }
 \description{
-This package contains seven datasets from the California Department of Education
+This package contains nine datasets from the California Department of Education
 that can be explored in R.
 }
 \details{
-This contains data within seven tables: cohorts, dropouts, english_learners, enrollments,
-frpm, graduates, primary_and_short_term. For definitions of each of these, see
+This contains data within nine tables: cohorts, dropouts, english_learners, enrollments,
+frpm, graduates, primary_and_short_term, suspensions, and truancy. For definitions of each of these, see
 the page here: \url{http://www.cde.ca.gov/ds/sd/sd/index.asp}.
 }
 \keyword{datasets}
