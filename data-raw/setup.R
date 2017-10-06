@@ -101,7 +101,9 @@ enrollments <- dir() %>%
   keep(str_detect(., "filesenr.asp.txt")) %>%
   map(read_and_mutate_with_year) %>%
   map_df(mutate, CDS_CODE = as.character(CDS_CODE)) %>%
-  mutate(YEAR = factor(YEAR, year_levels))
+  mutate(YEAR = factor(YEAR, levels = c("9495", "9596", "9697", "9798", "9899", "9900",
+                                        "0001", "0102", "0203", "0304", "0405", "0506", "0607", "2007-08", "2008-09", "2009-10",
+                                        "2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2015-16", "2016-17")))
 saveRDS(enrollments, "enrollments.rds")
 
 # Downloadable data files for primary and short-term school-level enrollment
